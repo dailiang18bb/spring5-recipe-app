@@ -1,2 +1,2 @@
 # spring5-recipe-app
-Practice Spring MVC
+Practice Spring MVC and Spring Data JPA
