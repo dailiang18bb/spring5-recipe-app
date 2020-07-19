@@ -12,12 +12,28 @@
     <tr>
         <th>ID</th>
         <th>Description</th>
+        <th>Prep Time</th>
+        <th>Cook Time</th>
+        <th>Difficulty</th>
+        <th>Categories</th>
+        <th>Notes</th>
+        <th>Directions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="recipe : ${recipes}">
         <td th:text="${recipe.id}">321</td>
         <td th:text="${recipe.description}">zha jiang mian</td>
+        <td th:text="${recipe.prepTime}">2</td>
+        <td th:text="${recipe.cookTime}">2</td>
+        <td th:text="${recipe.difficulty}">easy</td>
+        <td>
+            <p th:each="category : ${recipe.categories}">
+                <span th:text="${category.description}">category description</span>
+            </p>
+        </td>
+        <td th:text="${recipe.notes.recipeNotes}">notes</td>
+        <td th:text="${recipe.directions}">directions</td>
     </tr>
     </tbody>
 </table>
