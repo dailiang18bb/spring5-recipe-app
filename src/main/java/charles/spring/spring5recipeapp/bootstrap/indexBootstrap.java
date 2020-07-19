@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class indexBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -36,6 +35,12 @@ public class indexBootstrap implements ApplicationListener<ContextRefreshedEvent
         return unitOfMeasureRepository
                 .findByDescription(description)
                 .orElseThrow(()-> new RuntimeException("Unit of measure '" + description + "' not found"));
+    }
+
+    private Category getCategory(String description) {
+        return categoryRepository
+                .findByDescription(description)
+                .orElseThrow(()-> new RuntimeException("Category '" + description + "' not found"));
     }
 
 
@@ -83,18 +88,18 @@ public class indexBootstrap implements ApplicationListener<ContextRefreshedEvent
         UnitOfMeasure cupsUom = getUnitOfMeasure("Cup");
 
         // Get Categories
-        Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
-        if(!americanCategoryOptional.isPresent()){
-            throw new RuntimeException("Expected Category Not Found");
-        }
+//        Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
+//        if(!americanCategoryOptional.isPresent()){
+//            throw new RuntimeException("Expected Category Not Found");
+//        }
+//
+//        Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
+//        if(!mexicanCategoryOptional.isPresent()){
+//            throw new RuntimeException("Expected Category Not Found");
+//        }
 
-        Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
-        if(!mexicanCategoryOptional.isPresent()){
-            throw new RuntimeException("Expected Category Not Found");
-        }
-
-        Category americanCategory = americanCategoryOptional.get();
-        Category mexicanCategory = mexicanCategoryOptional.get();
+        Category americanCategory = getCategory("American");
+        Category mexicanCategory = getCategory("Mexican");
 
         //Recipe perfect guac
         Recipe perfectGuacamole = new Recipe();
@@ -133,8 +138,10 @@ public class indexBootstrap implements ApplicationListener<ContextRefreshedEvent
         perfectGuacamole.addIngredients(new Ingredient("freshly grated black pepper", new BigDecimal(2), dashUom));
         perfectGuacamole.addIngredients(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(".5"), eachUom));
 
-        perfectGuacamole.getCategories().add(americanCategory);
-        perfectGuacamole.getCategories().add(mexicanCategory);
+//        perfectGuacamole.getCategories().add(americanCategory);
+//        perfectGuacamole.getCategories().add(mexicanCategory);
+
+        perfectGuacamole.addCategories(americanCategory, mexicanCategory);
 
         //add to return list
         recipes.add(perfectGuacamole);
@@ -168,7 +175,7 @@ public class indexBootstrap implements ApplicationListener<ContextRefreshedEvent
                 "\n" +
                 "\n" +
                 "Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz4jvu7Q0MJ");
-        tacoNotes.setRecipe(spicyGrilledChickenTacos);
+//        tacoNotes.setRecipe(spicyGrilledChickenTacos);
         spicyGrilledChickenTacos.setNotes(tacoNotes);
 
         spicyGrilledChickenTacos.addIngredients(new Ingredient("Ancho Chili Powder", new BigDecimal(2), tableSpoonUom));
@@ -191,8 +198,10 @@ public class indexBootstrap implements ApplicationListener<ContextRefreshedEvent
         spicyGrilledChickenTacos.addIngredients(new Ingredient("cup sour cream thinned with 1/4 cup milk", new BigDecimal(4), cupsUom));
         spicyGrilledChickenTacos.addIngredients(new Ingredient("lime, cut into wedges", new BigDecimal(4), eachUom));
 
-        spicyGrilledChickenTacos.getCategories().add(americanCategory);
-        spicyGrilledChickenTacos.getCategories().add(mexicanCategory);
+//        spicyGrilledChickenTacos.getCategories().add(americanCategory);
+//        spicyGrilledChickenTacos.getCategories().add(mexicanCategory);
+
+        spicyGrilledChickenTacos.addCategories(americanCategory, mexicanCategory);
 
         recipes.add(spicyGrilledChickenTacos);
         return recipes;

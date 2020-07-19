@@ -152,4 +152,11 @@ public class Recipe {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
+
+    public Recipe addCategories(Category... categories){
+        for(Category cate : categories){
+            this.categories.add(cate);
+        }
+        return this;
+    }
 }
