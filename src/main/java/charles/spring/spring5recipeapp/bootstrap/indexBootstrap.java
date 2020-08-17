@@ -4,6 +4,7 @@ import charles.spring.spring5recipeapp.domain.*;
 import charles.spring.spring5recipeapp.repositories.CategoryRepository;
 import charles.spring.spring5recipeapp.repositories.RecipeRepository;
 import charles.spring.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Slf4j
 @Component
 public class indexBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -28,6 +31,7 @@ public class indexBootstrap implements ApplicationListener<ContextRefreshedEvent
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recipeRepository.saveAll(getRecipes());
+        log.debug("Loading Bootstrap Data");
     }
 
 
